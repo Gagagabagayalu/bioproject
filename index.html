@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>Mark-Recapture Model</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <div id="controls">
+      <button id="btn-start">Start</button>
+      <button id="btn-reset">Reset</button>
+      <button id="btn-go">Open/Close Trap (Space)</button>
+
+      <label>Pop_Size
+        <input type="number" id="pop-size" min="50" max="500" value="200" step="10">
+      </label>
+
+      <label>Distribution
+        <select id="distribution">
+          <option value="random" selected>Random · 田鼠</option>
+          <option value="clumped">Clumped · 旅鼠</option>
+          <option value="uniform">Uniform · 囊地鼠</option>
+        </select>
+      </label>
+
+      <label>Trap_Experience
+        <select id="trap-exp">
+          <option value="neutral" selected>Neutral</option>
+          <option value="negative">Negative</option>
+          <option value="positive">Positive</option>
+        </select>
+      </label>
+
+      <label>Trap_Size
+        <select id="trap-size">
+          <option value="large" selected>Large Net</option>
+          <option value="small">Small Net</option>
+        </select>
+      </label>
+
+      <label>Method
+        <select id="method">
+          <option value="lp" selected>Lincoln-Petersen</option>
+          <option value="chapman">Chapman</option>
+          <option value="schnabel">Schnabel</option>
+        </select>
+      </label>
+
+      <label><input type="checkbox" id="see-all" checked> See_All?</label>
+      <label><input type="checkbox" id="show-ci" checked> Show 95% CI?</label>
+      <label><input type="checkbox" id="show-heat"> Show Heatmap</label>
+
+      <button id="btn-mark">Mark Trapped</button>
+      <button id="btn-release">Release All</button>
+      <button id="btn-unmark">Unmark All</button>
+      <button id="btn-batch">Batch: 100 runs</button>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <div id="right-panel">
+      <div id="reporters">
+        <div>Total Marked: <span id="r-total-marked">0</span></div>
+        <div>In Trap: <span id="r-total-traps">0</span> / <span id="r-trap-cap">120</span></div>
+        <div>Marked In Trap: <span id="r-marked-traps">0</span></div>
+        <div>Est: <span id="r-est">—</span></div>
+        <div>95% CI: <span id="r-ci">—</span></div>
+        <div>Actual N: <span id="r-actual">0</span></div>
+        <div>% Error: <span id="r-error">—</span></div>
+        <div>CI 覆盖率: <span id="r-cover">—</span></div>
+      </div>
+
+      <h3>Estimate vs Round</h3>
+      <div id="chart-line"></div>
+      <h3>Error per Round</h3>
+      <div id="chart-bar"></div>
+      <h3>估计值分布（Batch）</h3>
+      <div id="chart-hist"></div>
+      <h3>偏差 vs R/C</h3>
+      <div id="chart-ratio"></div>
+
+      <h3>History</h3>
+      <div class="table-wrap">
+        <table id="history-table">
+          <thead><tr><th>#</th><th>M</th><th>C</th><th>R</th><th>N̂</th><th>Err</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <button id="btn-record">Record</button>
+      <button id="btn-export">Export CSV</button>
+      <button id="btn-clear">Clear Records</button>
+      <div id="record-count">Recorded: 0</div>
+    </div>
+  </div>
+
+  <script src="state.js"></script>
+  <script src="sampling.js"></script>
+  <script src="charts.js"></script>
+  <script src="vole.js"></script>
+  <script src="trap.js"></script>
+  <script src="ui.js"></script>
+  <script src="sketch.js"></script>
+</body>
+</html>
